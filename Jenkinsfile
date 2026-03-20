@@ -22,7 +22,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat 'dotnet test'
+                 bat 'dotnet test TodoApp.WebAPI\\TodoApp.WebAPI.sln'
             }
         }
 

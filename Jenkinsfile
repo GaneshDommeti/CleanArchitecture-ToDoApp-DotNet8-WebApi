@@ -9,16 +9,16 @@ pipeline {
     stages {
 
         stage('Restore') {
-            steps {
-                bat 'dotnet restore TodoApp.sln'
-            }
-        }
+    steps {
+        bat 'dotnet restore TodoApp.WebAPI\\TodoApp.WebAPI.sln'
+    }
+}
 
         stage('Build') {
-            steps {
-                bat 'dotnet build TodoApp.sln --configuration Release'
-            }
-        }
+    steps {
+        bat 'dotnet build TodoApp.WebAPI\\TodoApp.WebAPI.sln --configuration Release'
+    }
+}
 
         stage('Test') {
             steps {

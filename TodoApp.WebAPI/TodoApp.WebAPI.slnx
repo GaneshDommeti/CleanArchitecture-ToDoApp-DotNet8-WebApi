@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Tests/">
+    <Project Path="../TodoApp.Tests/TodoApp.WebAPI.Tests/TodoApp.WebAPI.Tests.csproj" />
+    <Project Path="../TodoApp.WebAPI.Tests/TodoApp.Application.Tests/TodoApp.Application.Tests.csproj" />
+    <Project Path="../TodoApp.WebAPI.Tests/TodoApp.Infrastructure.Tests/TodoApp.Infrastructure.Tests.csproj" />
+  </Folder>
+  <Project Path="../TodoApp.Application/TodoApp.Application.csproj" />
+  <Project Path="../TodoApp.Domain/TodoApp.Domain.csproj" />
+  <Project Path="../TodoApp.Functions/TodoApp.Functions.csproj" Id="d35498c6-a782-4eee-b3d4-9c2494a4dd45" />
+  <Project Path="../TodoApp.Infrastructure/TodoApp.Infrastructure.csproj" />
+  <Project Path="TodoApp.WebAPI.csproj" />
+</Solution>

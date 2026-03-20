@@ -26,7 +26,14 @@ namespace TodoApp.Infrastructure.Repositories
 
         public async Task<User> GetUserByIdAsync(int id)
         {
-            return await _context.Users.FindAsync(id);
+
+            var list = await _context.Users.Include(x => x.ToDoLists).ThenInclude(i=>i.Items).FirstOrDefaultAsync(x => x.UserId == id);
+            //return await _context.Users.FindAsync(id);
+            if (list == null)
+            {
+                throw new InvalidOperationException($"User with id {id} was not found.");
+            }
+            return list;
         }
 
         public async Task AddUserAsync(User user)
@@ -51,5 +58,4 @@ namespace TodoApp.Infrastructure.Repositories
             }
         }
     }
-
 }

@@ -1,22 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using TodoApp.Application.Interfaces;
 using TodoApp.Domain.Entities;
 using TodoApp.Infrastructure.Data;
 
 namespace TodoApp.Infrastructure.Repositories
 {
-    /// <summary>
-    /// This talks to database hence as per Clean Architecture we should write here
-    /// </summary>
     public class ToDoItemRepository : IToDoItemRepository
     {
         private readonly AppDbContext _context;
-
         public ToDoItemRepository(AppDbContext context)
         {
-            _context = context;
+         this._context = context;       
         }
-
         public async Task AddItemAsync(ToDoItem item)
         {
             _context.ToDoItems.Add(item);

@@ -22,5 +22,4 @@ namespace TodoApp.WebAPI.Filters
             };
         }
     }
-
 }

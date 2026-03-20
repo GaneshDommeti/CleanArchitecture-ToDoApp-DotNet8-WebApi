@@ -9,11 +9,10 @@ using TodoApp.Infrastructure.Configurations;
 
 namespace TodoApp.Infrastructure.Data
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }//pass connection string from configuration/programe.cs
 
-        //All these are tables which are entities in domain layer. this way we can access the database tables
         public DbSet<User> Users { get; set; }
         public DbSet<ToDoList> ToDoLists { get; set; }
         public DbSet<ToDoItem> ToDoItems { get; set; }
@@ -25,5 +24,6 @@ namespace TodoApp.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new ToDoItemConfiguration());
             base.OnModelCreating(modelBuilder); // Call to the base method
         }
+
     }
 }

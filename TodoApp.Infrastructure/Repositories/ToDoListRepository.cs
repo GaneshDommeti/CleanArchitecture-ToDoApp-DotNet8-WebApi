@@ -31,7 +31,13 @@ namespace TodoApp.Infrastructure.Repositories
 
         public async Task<ToDoList> GetListByIdAsync(int id)
         {
-            return await _context.ToDoLists.FindAsync(id);
+            //var list = await _context.ToDoLists.FindAsync(id);
+            var list = await _context.ToDoLists.Include(x => x.Items).FirstOrDefaultAsync(x => x.ToDoListId == id);
+            if (list == null)
+            {
+                throw new InvalidOperationException($"ToDoList with id {id} was not found.");
+            }
+            return list;
         }
 
         public async Task AddListAsync(ToDoList list)
@@ -56,5 +62,4 @@ namespace TodoApp.Infrastructure.Repositories
             }
         }
     }
-
 }

@@ -5,17 +5,15 @@ using TodoApp.Domain.Entities;
 
 namespace TodoApp.WebAPI.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class ToDoListController : ControllerBase
     {
-        private readonly IToDoListService _toDoListService;
-
-        public ToDoListController(IToDoListService toDoListService)
+        private readonly IToDoListService _toDoListService; 
+        public ToDoListController(IToDoListService toDoItemService )
         {
-            _toDoListService = toDoListService;
+            this._toDoListService = toDoItemService;
         }
-
         [HttpPost]
         public async Task<IActionResult> CreateToDoList([FromBody] ToDoList toDoList)
         {
@@ -30,5 +28,4 @@ namespace TodoApp.WebAPI.Controllers
             return toDoList == null ? NotFound() : Ok(toDoList);
         }
     }
-
 }

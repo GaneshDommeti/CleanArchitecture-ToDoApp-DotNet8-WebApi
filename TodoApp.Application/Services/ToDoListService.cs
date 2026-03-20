@@ -10,13 +10,11 @@ namespace TodoApp.Application.Services
 {
     public class ToDoListService : IToDoListService
     {
-        private readonly IToDoListRepository _toDoListRepository;
-
+        private readonly IToDoListRepository _toDoListRepository;   
         public ToDoListService(IToDoListRepository toDoListRepository)
         {
-            _toDoListRepository = toDoListRepository;
+           this._toDoListRepository = toDoListRepository;
         }
-
         public async Task<IEnumerable<ToDoList>> GetAllListsAsync()
         {
             return await _toDoListRepository.GetAllListsAsync();
@@ -31,6 +29,7 @@ namespace TodoApp.Application.Services
         {
             return await _toDoListRepository.GetListByIdAsync(id);
         }
+
 
         public async Task AddListAsync(ToDoList list)
         {
@@ -47,5 +46,4 @@ namespace TodoApp.Application.Services
             await _toDoListRepository.DeleteListAsync(id);
         }
     }
-
 }

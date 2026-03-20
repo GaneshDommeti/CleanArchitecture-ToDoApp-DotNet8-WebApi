@@ -22,25 +22,22 @@ namespace TodoApp.WebAPI.Tests
             _mockService = new Mock<IToDoItemService>();
             _controller = new ToDoItemController(_mockService.Object);
         }
-
         [Fact]
-        public async Task GetAll_ReturnsOkResult_WithItems()
+        public async Task GetAll_ReturnsOkResult_WithListOfToDoItems()
         {
             // Arrange
-            var items = new List<ToDoItem>
+            var toDoItems = new List<Domain.Entities.ToDoItem>
             {
-                new ToDoItem { ToDoItemId = 1, Title = "Task 1" },
-                new ToDoItem { ToDoItemId = 2, Title = "Task 2" }
+                new Domain.Entities.ToDoItem { ToDoItemId = 1, Title = "Test Item 1" },
+                new Domain.Entities.ToDoItem { ToDoItemId = 2, Title = "Test Item 2" }
             };
-            _mockService.Setup(service => service.GetAllItemsAsync()).ReturnsAsync(items);
-
+            _mockService.Setup(s => s.GetAllItemsAsync()).ReturnsAsync(toDoItems);
             // Act
             var result = await _controller.GetAll();
-
             // Assert
-            var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            var returnedItems = Assert.IsType<List<ToDoItem>>(okResult.Value);
-            Assert.Equal(2, returnedItems.Count);
+            var okResult = Assert.IsType<Microsoft.AspNetCore.Mvc.OkObjectResult>(result.Result);
+            var returnItems = Assert.IsAssignableFrom<IEnumerable<Domain.Entities.ToDoItem>>(okResult.Value);
+            Assert.Equal(2, returnItems.Count());
         }
         [Fact]
         public async Task GetById_ReturnsNotFound_WhenItemDoesNotExist()

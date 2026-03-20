@@ -6,6 +6,7 @@ using TodoApp.Domain.Enums;
 using TodoApp.Infrastructure.Data;
 using TodoApp.Infrastructure.Repositories;
 using TodoApp.WebAPI.Filters;
+
 namespace TodoApp.WebAPI
 {
     public class Program
@@ -13,19 +14,17 @@ namespace TodoApp.WebAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-
             var useInMemoryDB = builder.Configuration.GetValue<bool>("UseInMemoryDB");
 
             // Add services to the container.
 
-            builder.Services.AddControllers(options =>
-            {
-                options.Filters.Add<GlobalExceptionFilter>();
-            });
+            //builder.Services.AddControllers(options =>
+            //{
+            //    options.Filters.Add<GlobalExceptionFilter>();
+            //});
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
+            // Ensure the Swashbuckle.AspNetCore NuGet package is referenced in the project.
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IToDoItemService, ToDoItemService>();
             builder.Services.AddScoped<IUserService, UserService>();
@@ -35,13 +34,19 @@ namespace TodoApp.WebAPI
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IToDoListRepository, ToDoListRepository>();
 
+            // Add services to the container.
 
+            builder.Services.AddControllers(options =>
+            {
+                options.Filters.Add<GlobalExceptionFilter>();
+            });
             if (useInMemoryDB)
             {
 
                 // we could have written that logic here but as per clean architecture, we are separating these into their own piece of code
                 builder.Services.AddInMemoryDatabase();
-            } else
+            }
+            else
             {
                 //use this for real database on your sql server
                 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -54,11 +59,16 @@ namespace TodoApp.WebAPI
                   );
             }
 
+            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+            //builder.Services.AddOpenApi();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                //app.MapOpenApi();
+
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
@@ -69,7 +79,6 @@ namespace TodoApp.WebAPI
 
 
             app.MapControllers();
-
             if (useInMemoryDB)
             {
                 // Seed data. Use this config for in memory database
@@ -78,7 +87,8 @@ namespace TodoApp.WebAPI
                     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                     SeedData(context); // Call to seed data
                 }
-            } else
+            }
+            else
             {
                 //User this if you want database on your sql server
                 // Automatically create the database if it does not exist. This is required only for real database
@@ -92,7 +102,6 @@ namespace TodoApp.WebAPI
 
             app.Run();
         }
-
         private static void SeedData(AppDbContext context)
         {
             context.Users.AddRange(

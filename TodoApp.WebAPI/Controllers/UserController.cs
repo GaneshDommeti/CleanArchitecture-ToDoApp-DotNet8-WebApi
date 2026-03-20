@@ -5,8 +5,8 @@ using TodoApp.Domain.Entities;
 
 namespace TodoApp.WebAPI.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -36,6 +36,6 @@ namespace TodoApp.WebAPI.Controllers
             var user = await _userService.GetAllUsersAsync();
             return user == null ? NotFound() : Ok(user);
         }
-    }
 
+    }
 }

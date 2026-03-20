@@ -17,4 +17,5 @@
 	  <ProjectReference Include="..\..\TodoApp.Infrastructure\TodoApp.Infrastructure.csproj" />
 	  <ProjectReference Include="..\..\TodoApp.WebAPI\TodoApp.WebAPI.csproj" />
 	</ItemGroup>
+
 </Project>

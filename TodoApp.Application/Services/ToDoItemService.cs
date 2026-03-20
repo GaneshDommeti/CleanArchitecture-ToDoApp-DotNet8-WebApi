@@ -12,23 +12,22 @@ namespace TodoApp.Application.Services
     /// All the business logic should go via service hence we need to call repository from servcie and service
     /// should be in Application layer.
     /// </summary>
+
     public class ToDoItemService : IToDoItemService
     {
-        private readonly IToDoItemRepository _toDoItemRepository;
-
+        private IToDoItemRepository _toDoItemRepository;
         public ToDoItemService(IToDoItemRepository toDoItemRepository)
         {
-            _toDoItemRepository = toDoItemRepository;
+                this._toDoItemRepository = toDoItemRepository;
         }
-
         public async Task<IEnumerable<ToDoItem>> GetAllItemsAsync()
-         {
+        {
             return await _toDoItemRepository.GetAllItemsAsync();
         }
 
         public async Task<ToDoItem> GetItemByIdAsync(int id)
         {
-           return await _toDoItemRepository.GetItemByIdAsync(id); ;
+            return await _toDoItemRepository.GetItemByIdAsync(id); ;
         }
 
         public async Task AddItemAsync(ToDoItem item)
@@ -46,5 +45,4 @@ namespace TodoApp.Application.Services
             await _toDoItemRepository.DeleteItemAsync(id);
         }
     }
-
 }

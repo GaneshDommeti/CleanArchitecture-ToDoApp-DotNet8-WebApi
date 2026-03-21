@@ -31,16 +31,27 @@ pipeline {
                 bat 'dotnet tool install -g Amazon.Lambda.Tools || echo already installed'
             }
         }
+        
+stage('Publish') {
+    steps {
+        bat '''
+        dotnet publish TodoApp.WebAPI\\TodoApp.WebAPI.csproj ^
+        -c Release ^
+        -o publish
+        '''
+    }
+}
 
-        stage('Package Lambda') {
-            steps {
-                bat '''
-                dotnet lambda package ^
-                --project-location TodoApp.WebAPI ^
-                --output-package deploy.zip
-                '''
-            }
-        }
+stage('Package Lambda') {
+    steps {
+        bat '''
+        dotnet lambda package ^
+        --project-location TodoApp.WebAPI ^
+        --configuration Release ^
+        --output-package deploy.zip
+        '''
+    }
+}
 
         stage('Deploy') {
             steps {

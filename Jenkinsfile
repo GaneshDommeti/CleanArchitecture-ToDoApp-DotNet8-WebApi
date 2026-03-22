@@ -8,40 +8,21 @@ pipeline {
 
     stages {
 
-        stage('Restore') {
+        stage('Checkout') {
             steps {
-                bat 'dotnet restore TodoApp.WebAPI\\TodoApp.WebAPI.sln'
+                git branch: 'master',
+                    url: 'https://github.com/GaneshDommeti/CleanArchitecture-ToDoApp-DotNet8-WebApi.git',
+                    credentialsId: 'github-creds'
             }
         }
-
-        stage('Build') {
+        stage('Setup Tools') {
             steps {
-                bat 'dotnet build TodoApp.WebAPI\\TodoApp.WebAPI.sln --configuration Release'
+               bat 'dotnet tool install -g Amazon.Lambda.Tools || echo already installed'
             }
         }
-
-        stage('Test') {
-            steps {
-                bat 'dotnet test TodoApp.WebAPI\\TodoApp.WebAPI.sln'
-            }
-        }
-
-        stage('Install Lambda Tools') {
-            steps {
-                bat 'dotnet tool install -g Amazon.Lambda.Tools || echo already installed'
-            }
-        }
-
+              
         stage('Package Lambda') {
-            steps {
-                bat '''
-                dotnet lambda package ^
-                --project-location TodoApp.WebAPI ^
-                --framework net8.0 ^
-                --configuration Release ^
-                --output-package deploy.zip
-                '''
-            }
+           bat 'dotnet lambda package --configuration Release --output-package deploy.zip'
         }
 
         stage('Deploy') {

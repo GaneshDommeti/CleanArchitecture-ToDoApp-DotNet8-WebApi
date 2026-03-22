@@ -31,11 +31,13 @@ pipeline {
         }
         
         stage('Restore & Build') {
-            steps {
-                bat 'dotnet restore'
-                bat 'dotnet build --configuration Release'
-            }
+    steps {
+        dir('TodoApp.WebAPI') {
+            bat 'dotnet restore TodoApp.WebAPI.sln'
+            bat 'dotnet build TodoApp.WebAPI.sln --configuration Release'
         }
+    }
+}
               
         stage('Package Lambda') {
             steps {

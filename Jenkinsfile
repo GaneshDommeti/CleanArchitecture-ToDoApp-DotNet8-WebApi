@@ -20,6 +20,19 @@ pipeline {
                bat 'dotnet tool install -g Amazon.Lambda.Tools || echo already installed'
             }
         }
+        
+        stage('Test') {
+            steps {
+                bat 'dotnet test TodoApp.WebAPI\\TodoApp.WebAPI.sln'
+            }
+        }
+        
+        stage('Restore & Build') {
+            steps {
+                bat 'dotnet restore'
+                bat 'dotnet build --configuration Release'
+            }
+        }
               
         stage('Package Lambda') {
            bat 'dotnet lambda package --configuration Release --output-package deploy.zip'

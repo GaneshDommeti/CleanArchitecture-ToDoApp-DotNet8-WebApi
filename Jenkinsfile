@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master',
+                git branch: 'main',
                     url: 'https://github.com/GaneshDommeti/CleanArchitecture-ToDoApp-DotNet8-WebApi.git',
                     credentialsId: 'github-creds'
             }
